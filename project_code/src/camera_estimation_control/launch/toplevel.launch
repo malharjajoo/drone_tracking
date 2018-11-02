@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Will add camera driver launch file here. Currently not required since using simulation and gazebo
+          has pluging enabled for publishing stereo camera images over ROS topics -->
+
+
+    <include file="$(find camera_estimation_control)/launch/driver_config.launch" />
+
+
+    <include file="$(find camera_estimation_control)/launch/controller.launch" />
+
+   
+</launch>

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<launch>
+	<include file="$(find ardrone_practicals)/launch/arp.launch"/>
+	<include file="$(find cvg_sim_gazebo)/launch/ardrone_testworld.launch" />
+</launch>

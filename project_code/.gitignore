@@ -1,0 +1,10 @@
+build/
+devel/
+
+#VLC player related
+vlc-log.txt
+
+# Backup/Original ROS bag files created by "rosbag compress"
+*.orig.bag
+*.bag
+*.jpg

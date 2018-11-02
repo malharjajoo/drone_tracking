@@ -1,0 +1,57 @@
+<!-- This File ASSUMES that stereo calibration is already done and is read from an Extrisnics file.
+This means the stereo pair needs to be fixed -->
+
+<launch> 
+	<arg name="camera_ns" default="sricam" />
+
+	<!-- Used only for verifying images. Remove this later -->
+	<arg name="show_individual_images" value="true" />
+
+
+	<!-- Get Camera Feed from live cameras or a specified ROS bag file -->
+	<arg name="play_recording" value="true" />
+	<arg name="rosbag_file" value="$(find camera_driver)/rosbag_files/mySeminarRoomSession.bag" />
+	<arg name="playback_rate" value="0.5"/>
+
+	<!-- dynamic configuration and visualization of pointcloud -->
+	<arg name="configure_pointcloud" default="true"/>
+	<arg name="visualize_pointcloud" default="true"/>
+
+	<!-- if ipcam is not used then webcam needs to be connected. -->
+	<!-- Note: this is useless if playing from a ROS bag file -->
+	<arg name="camera_used" value="webcam" />
+
+
+	<group ns="$(arg camera_ns)">
+
+		<!-- Get Camera Feed from either ROSbag or live cameras -->
+		<node if="$(arg play_recording)" pkg="rosbag" type="play" name="rosbagplay_node" args="-r $(arg playback_rate) $(arg rosbag_file)" required="true"/>
+
+		<node unless="$(arg play_recording)" pkg="camera_driver" type="myCamDriver" name="myCamDriver_node" output="screen" args="$(arg camera_used)  pointcloud" required="true">
+		</node>
+
+
+		<!-- Stereo processing nodes -->
+		<node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_processing_node"/>
+
+		
+		<!-- tweak Block Matching algorithm settings for obtaining point cloud -->
+		<node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure_node" if="$(arg configure_pointcloud)"/>
+		
+		<!-- These nodes are just for Verifying if left and right camera are correct 
+		     and if rectification works correctly. A lot of remapping going on, was done using "rosnode info <node>" -->
+		<node if="$(arg show_individual_images)" pkg="image_view" type="stereo_view" name="stereo_view_node" args="stereo:=">
+			<remap from="/$(arg camera_ns)/left/$(arg camera_ns)/image" to="/$(arg camera_ns)/left/image_raw" />
+			<remap from="/$(arg camera_ns)/right/$(arg camera_ns)/image" to="/$(arg camera_ns)/right/image_raw" />
+		</node>
+
+		<node pkg="rviz" type="rviz" name="rviz_node" if="$(arg visualize_pointcloud)"/>
+
+	</group>
+
+	
+
+		
+
+</launch>
+

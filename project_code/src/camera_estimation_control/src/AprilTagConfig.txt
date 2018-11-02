@@ -1,0 +1,37 @@
+# Please ensure that measurements are in metres.
+
+
+# Note: It is important that the Rotation Matrix component of the 4x4 Transformation Matrix is set correctly.
+# 		Two examples are provided below:
+# 		If the april Tag is placed *horizontally/flat* on the ground such that the world frame is the bottom right 
+#		corner of a room, then the Rotation Matrix component of the 4x4 Transformation Matrix will be:
+
+#		0.000000000000000, 1.000000000000000, 0.000000000000000,
+#		-1.000000000000000, 0.000000000000000, 0.000000000000000,
+#		0.000000000000000, 0.000000000000000, 1.000000000000000;
+
+
+# 		If for example the AprilTag is placed on a *vertical* wall (make sure the AprilTag is NOT inverted!),
+# 		the Rotation Matrix component of the 4x4 Transformation Matrix will be:
+
+#		0.000000000000000, 0.000000000000000, -1.000000000000000,
+#		-1.000000000000000, 0.000000000000000, 0.000000000000000,
+#		0.000000000000000, 1.000000000000000, 0.000000000000000;
+
+# The simple trick to figuring out these matrices would be think of how a coordinate
+# would be transformed on pre-multiplying the Matrix with it. For more information
+# see the main report or read up on Transformation Matrices and coordinate transforms.
+# The user may be advised that this Rotation Matrix is easier to find (when doing manually) for 
+# some flat configuration: either horizontal or vertical. Hence, try to avoid placing the April Tag 
+# in a slanting manner.
+
+# Please enter AprilTag Configuration as follows (see example below)-
+# id tag_size
+# 4x4 Homogenous Transformation Matrix
+
+
+1 0.172  
+0.000000000000000 1.000000000000000 0.000000000000000 3.9
+-1.000000000000000 0.000000000000000 0.000000000000000 4.01
+0.000000000000000 0.000000000000000 1.000000000000000 0.006
+0 0 0 1;

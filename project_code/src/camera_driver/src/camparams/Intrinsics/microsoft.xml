@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<image_width>640</image_width>
+<image_height>480</image_height>
+<board_width>9</board_width>
+<board_height>6</board_height>
+<square_size>2.5779999792575836e-02</square_size>
+
+<!-- flags: +fix_aspectRatio +fix_principal_point +zero_tangent_dist +fix_k4 +fix_k5 -->
+
+<camera_matrix type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    666.084810 0.000000 318.640164 0.000000 665.320802 243.610667 0.000000 0.000000 1.000000
+</data></camera_matrix>
+
+<distortion_coefficients type_id="opencv-matrix">
+  <rows>5</rows>
+  <cols>1</cols>
+  <dt>d</dt>
+  <data>
+   0.038591 -0.316945 0.005437 -0.002977 0.000000
+  </data>
+</distortion_coefficients>
+
+
+<projection_matrix type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>4</cols>
+  <dt>d</dt>
+  <data>
+    660.505188 0.000000 317.070278 0.000000 0.000000 664.999146 245.119148 0.000000 0.000000 0.000000 1.000000 0.000000
+</data>
+</projection_matrix>
+
+<rectification_matrix type_id="opencv-matrix">
+  <rows>3</rows>
+  <cols>3</cols>
+  <dt>d</dt>
+  <data>
+    1.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 1.000000</data>
+</rectification_matrix>
+
+
+
+</opencv_storage>

@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+
+ <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+   <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+
+    <!-- Focus camera on tall pendulum -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>4.927360 -4.376610 3.740080 0.000000 0.275643 2.356190</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+  <model name="stereocamera_model">
+    <static>true</static>
+    <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+    <link name="stereocamera_link">
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>0.1</mass>
+      </inertial>
+      <visual name="stereovisual_box">
+        <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <geometry>
+          <box size="0.02 0.02 0.02"/>
+        </geometry>
+        <material>
+          <ambient>0.03 0.5 0.5 1.0</ambient>
+          <script>Gazebo/Green</script>
+        </material>
+        <laser_retro>100.0</laser_retro>
+      </visual>
+      <collision name="collision_box">
+        <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <geometry>
+          <box size="0.02 0.02 0.02"/>
+        </geometry>
+        
+        <laser_retro>100.0</laser_retro>
+      </collision>
+      <sensor type="multicamera" name="stereo_camera">
+        <update_rate>30</update_rate>
+        <camera name="left">
+          <horizontal_fov>1.3962634</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>300</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <camera name="right">
+          <!-- Make sure the pose is set to -1* <hackBaseline> tag value (below).
+           This is because of horizontal stereo (along y-direction in gazebo simulator) 
+           Maybe use a common variable for both ? Not sure if that can be done in sdf format... -->
+          <pose>0 -0.2 0 0 0 0</pose>
+          <horizontal_fov>1.3962634</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>300</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>0.0</updateRate>
+          <cameraName>sricam</cameraName>
+          <imageTopicName>image_raw</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <frameName>left_camera_optical_frame</frameName>
+          <!--<rightFrameName>right_camera_optical_frame</rightFrameName>-->
+          <hackBaseline>0.2</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </link>
+  </model>
+
+  </world>
+</sdf>

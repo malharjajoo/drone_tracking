@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch> 
+
+	<arg name="camera_ns" default="sricam" />
+	<arg name="drone_camera_ns" value="/ardrone/front/"/>
+
+
+	<node pkg="camera_estimation_control" type="myController" name="controller_node" output="screen">
+
+		<!-- Use for testing commands in real life.
+		This is not required if using simulation -->
+		<!--<remap from="/cmd_vel" to="/cmd_vel_test"/> -->
+
+	</node>	
+
+</launch>
+

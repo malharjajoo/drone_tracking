@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch> 
+
+	<node pkg="camera_estimation_control" type="CameraWorldPoses" name="camera_world_poses_node" output="screen">
+	</node>	
+
+    <node pkg="rviz" type="rviz" name="camera_pose_visalizer_node" args="-d $(find camera_estimation_control)/config/worldPoseVisualization.rviz" />
+
+</launch>

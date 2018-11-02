@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+    <launch>
+        <arg name="tagid" />
+
+	<!-- If using simulation, make sure this and object pose in simulation match. Also
+	ensure the c++ code is using the same set of transform
+        TODO: find a way to pass this to the C++ code ? rosparam ? -->
+        <arg name="init_pose" default="-x 4 -y -0.9 -z 0.8 -R -1.57 -P 0 -Y 1.57"/>
+
+        <arg name="robot_name" value="apriltag_$(arg tagid)"/>
+        <arg name="urdf_robot_file" value="$(find apriltag_description)/urdf/apriltag_$(arg tagid).urdf"/>
+
+
+        <param name="robot_description" command="cat $(arg urdf_robot_file)" />
+        
+        <node name="$(arg robot_name)_urdf_spawner" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf $(arg init_pose) -model $(arg robot_name) -param robot_description"/>
+    </launch>

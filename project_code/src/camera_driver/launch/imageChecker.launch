@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+
+   <node name="image_check1" pkg="image_view" type="image_view"
+       args="image:=/sricam/cam_777/image_raw"/>
+
+   <node name="image_check2" pkg="image_view" type="image_view"
+       args="image:=/sricam/cam_778/image_raw"/>
+
+   <node name="image_check3" pkg="image_view" type="image_view"
+       args="image:=/sricam/cam_734/image_raw"/>
+
+   
+</launch>

@@ -1,0 +1,44 @@
+<launch> 
+	
+	<!-- Please note, this launch file assumes a ROS compliant camera driver is used and is calibrated using prior to launchign this file.
+	Also ensure to remap the topic correctly (see <remap> tag below) -->
+
+    <arg name="camid" default="777"/>
+	<arg name="cam_ns" value="/sricam/cam_$(arg camid)"/>
+
+	
+
+	<!-- For april tags -->
+	 <node pkg="apriltags_ros" type="apriltag_detector_node" name="apriltag_detector_node" output="screen">
+	    <!-- Remap if required -->
+	    <remap from="image_rect" to="$(arg cam_ns)/image_raw" />
+	    <remap from="camera_info" to="$(arg cam_ns)/camera_info" />
+
+	    <!-- Optional: Subscribe to the compressed stream-->
+	    <param name="image_transport" type="str" value="compressed" />
+
+	    <!-- Select the tag family: 16h5, 25h7, 25h9, 36h9, or 36h11(default) -->
+	    <param name="tag_family" type="str" value="36h11" />
+
+	    <!-- Enable projected optical measurements for more accurate tag transformations -->
+	    <!-- This exists for backwards compatability and should be left true for new setups -->
+	    <param name="projected_optics" type="bool" value="true" />
+    
+     
+
+    <!-- Describe the tags -->
+    <rosparam param="tag_descriptions">[
+      {id: 0, size: 0.16, frame_id: target_0},
+      {id: 1, size: 0.172, frame_id: target_1},
+      {id: 2, size: 0.172, frame_id: target_2}]
+    </rosparam>
+	
+
+	
+	</node>
+	
+    <node pkg="image_view" type="image_view" name="apriltag_display_node" args="image:=/tag_detections_image"/>
+	
+
+</launch>
+

@@ -1,0 +1,38 @@
+<launch> 
+	<arg name="camera_ns" default="sricam" />
+
+	<!-- used only for verifying images -->
+	<arg name="show_individual_images" value="false" />
+	<!-- if ipcam is not used then webcam needs to be connected. -->
+	<arg name="camera_used" value="webcam" />
+
+
+	<group ns="$(arg camera_ns)">
+		
+		<!-- Get Camera Feed from live cameras -->
+		<node pkg="camera_driver" type="myCamDriver" name="myCamDriver_node" output="screen" args="$(arg camera_used)  stereocalibration">
+		</node>
+
+		<!-- for some reason the node does not recognize ROS parameters so passing as args (hacky method).
+		<param name="left_camera" value="/sricam/left" />
+		<param name="right_camera" value="/sricam/right" /> -->
+
+		<node pkg="camera_calibration" type="cameracalibrator.py" args="--size 9x6 --square 0.025779  right_camera:=right left_camera:=left" name="stereo_calibrator_node" output="screen">	
+			<remap from="right" to="/sricam/right/image_raw" />
+			<remap from="left" to="/sricam/left/image_raw" />
+		</node>
+
+		<!-- These nodes are just for debugging and verifying that left and right cameras are correct -->
+		<node if="$(arg show_individual_images)" pkg="image_view" type="image_view" name="left_imageviewer_node">
+			<remap from="image" to="left/image_raw" />
+		</node>
+
+		<node if="$(arg show_individual_images)" pkg="image_view" type="image_view" name="right_imageviewer_node">
+			<remap from="image" to="right/image_raw" />
+		</node>
+			
+		
+	</group>
+
+</launch>
+

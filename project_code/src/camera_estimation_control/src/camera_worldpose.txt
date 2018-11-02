@@ -1,0 +1,11 @@
+# The camera world poses are stored according to the following format: 
+# id 
+# 4x4 Homogenous Transformation Matrix 
+
+0 
+-0.278555 -0.729635 0.624532 1.61876 
+-0.90873 -0.0102248 -0.417259 4.52091 
+0.310832 -0.68376 -0.660193 2.26163 
+0 0 0 1;
+
+

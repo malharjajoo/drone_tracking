@@ -1,0 +1,43 @@
+<robot name="apriltag_8_3611">
+
+    <link name="apriltag_link_id8">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1.0"/>
+            <inertia ixx="0.07461" ixy="0.0" ixz="0.0" iyy="0.5854" iyz="0.0" izz="0.02641"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.2 0.2 0.1"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://apriltag_description/meshes/apriltag_8.dae"/>
+            </geometry>
+        </visual>
+    </link>
+    
+    <gazebo reference="apriltag_link_id8">
+        <kp>100000.0</kp>
+        <kd>100000.0</kd>
+        <mu1>0.1</mu1>
+        <mu2>0.1</mu2>  
+        <fdir1>1 0 0</fdir1>
+
+           <!-- this tag may be unecessary if static is set to true
+            (but using since may set static to false later)-->
+        <gravity>0</gravity>
+    </gazebo>
+
+    <!-- Make sure that the reference="" attribute is not specified -->
+    <gazebo>
+        <static>true</static>
+     
+        
+    </gazebo>
+    
+
+</robot>

@@ -1,0 +1,20 @@
+<launch> 
+
+	<arg name="camera_ns" default="sricam" />
+	
+	<!-- if ipcamera is not used then webcamera needs to be connected.
+	Change value to "ipcam" or "webcam" accordingly -->
+	<arg name="camera_used" value="webcam" />
+
+	<!-- T_WC -->
+    <!-- can publish the orientation using yaw, pitch and roll (in that order, and in radians..) Note that the transform is being publised at 100ms (10Hz) according
+    to ROS Tf guidelines-->
+	<node pkg="tf" type="static_transform_publisher" name="leftcam_broadcaster" args="0 0 0 0.5000 -0.5000 0.5000 -0.5000 world left_camera 100" />
+	
+
+	<node pkg="camera_driver" ns="$(arg camera_ns)" type="myCamDriver" name="myCamDriver_node" output="screen" args="$(arg camera_used)  stereocalibration">
+
+	</node>
+
+
+</launch> 

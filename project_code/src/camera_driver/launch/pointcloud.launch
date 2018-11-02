@@ -1,0 +1,34 @@
+<launch> 
+	<arg name="camera_ns" default="sricam" />
+
+	<!-- Used only for verifying images. Remove this later -->
+	<arg name="show_individual_images" value="true" />
+
+
+	<!-- dynamic configuration and visualization of pointcloud -->
+	<arg name="configure_pointcloud" default="true"/>
+	<arg name="visualize_pointcloud" default="true"/>
+
+
+	<group ns="$(arg camera_ns)">
+		
+		<!-- tweak Block Matching algorithm settings for obtaining point cloud -->
+		<node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure_node" if="$(arg configure_pointcloud)"/>
+		
+		<!-- These nodes are just for Verifying if left and right camera are correct 
+		     and if rectification works correctly. A lot of remapping going on, was done using "rosnode info <node>" -->
+		<node if="$(arg show_individual_images)" pkg="image_view" type="stereo_view" name="stereo_view_node" args="stereo:=">
+			<remap from="/$(arg camera_ns)/left/$(arg camera_ns)/image" to="/$(arg camera_ns)/left/image_raw" />
+			<remap from="/$(arg camera_ns)/right/$(arg camera_ns)/image" to="/$(arg camera_ns)/right/image_raw" />
+		</node>
+
+		<node pkg="rviz" type="rviz" name="rviz_node" if="$(arg visualize_pointcloud)"/>
+
+	</group>
+
+	
+
+		
+
+</launch>
+
